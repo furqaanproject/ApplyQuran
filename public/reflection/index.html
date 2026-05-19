@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="theme-color" content="#0E1117"/>
+<title>Share Your Reflection — 10 Days, 10 Lessons</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0E1117;color:#F0EDE6;font-family:Georgia,serif;min-height:100vh;
+    display:flex;align-items:flex-start;justify-content:center;padding:24px 16px 48px}
+  body::before{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-50%);
+    width:100%;max-width:600px;height:400px;
+    background:radial-gradient(ellipse,rgba(201,168,76,.07) 0%,transparent 70%);
+    pointer-events:none;z-index:0}
+  .card{position:relative;z-index:1;background:#111318;
+    border:1px solid rgba(201,168,76,.2);border-radius:4px;
+    padding:40px 28px 36px;max-width:600px;width:100%;overflow:hidden}
+  @media(max-width:380px){body{padding:16px 12px 40px}.card{padding:32px 20px 28px}}
+  .card::before{content:'';position:absolute;inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='g' x='0' y='0' width='80' height='80' patternUnits='userSpaceOnUse'%3E%3Cpolygon points='40,2 78,22 78,58 40,78 2,58 2,22' fill='none' stroke='%23C9A84C' stroke-width='0.8'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23g)'/%3E%3C/svg%3E");
+    opacity:.04;pointer-events:none}
+  .corner{position:absolute;width:36px;height:36px;opacity:.25}
+  .corner-tl{top:0;left:0;border-right:1px solid #C9A84C;border-bottom:1px solid #C9A84C}
+  .corner-tr{top:0;right:0;border-left:1px solid #C9A84C;border-bottom:1px solid #C9A84C}
+  .corner-bl{bottom:0;left:0;border-right:1px solid #C9A84C;border-top:1px solid #C9A84C}
+  .corner-br{bottom:0;right:0;border-left:1px solid #C9A84C;border-top:1px solid #C9A84C}
+  .inner{position:relative;z-index:1}
+  .eyebrow{font-size:10px;letter-spacing:3px;color:#C9A84C;text-transform:uppercase;
+    display:block;margin-bottom:20px;text-align:center;line-height:1.6}
+  .divider{width:36px;height:1px;background:rgba(201,168,76,.3);margin:0 auto 24px}
+  h1{font-size:clamp(22px,5vw,30px);font-weight:400;line-height:1.3;
+    color:#F0EDE6;text-align:center;margin-bottom:10px}
+  .subtitle{font-size:13px;line-height:1.75;color:#9E9A92;text-align:center;margin:0 auto 28px}
+  .form-group{margin-bottom:16px}
+  label{display:block;font-size:10px;letter-spacing:2px;color:#C9A84C;
+    text-transform:uppercase;margin-bottom:7px}
+  input,textarea,select{display:block;width:100%;background:rgba(255,255,255,.03);
+    border:1px solid rgba(201,168,76,.2);border-radius:3px;color:#F0EDE6;
+    padding:13px 14px;font-size:16px;line-height:1.5;font-family:Georgia,serif;
+    outline:none;transition:border-color .2s;appearance:none;-webkit-appearance:none}
+  input:focus,textarea:focus,select:focus{border-color:rgba(201,168,76,.55)}
+  input::placeholder,textarea::placeholder{color:#3A3830}
+  textarea{resize:vertical;min-height:110px;-webkit-overflow-scrolling:touch}
+  select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C9A84C' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;cursor:pointer}
+  select option{background:#111318;color:#F0EDE6}
+  .ayah-box{background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.15);
+    border-left:2px solid #C9A84C;border-radius:3px;padding:12px 14px;
+    margin-bottom:16px;display:none}
+  .ayah-box p{font-size:13px;line-height:1.75;color:#C8C4BB;font-style:italic}
+  .ayah-box .ayah-ref{display:block;font-size:10px;letter-spacing:1px;color:#C9A84C;margin-top:4px;opacity:.7}
+  .ayah-box .ayah-source{display:block;font-size:10px;color:#C9A84C;opacity:.4;
+    text-align:right;margin-top:2px;font-style:italic}
+  .submit-btn{width:100%;background:#C9A84C;color:#0E1117;border:none;border-radius:3px;
+    padding:16px 24px;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;
+    font-family:Georgia,serif;font-weight:700;cursor:pointer;margin-top:8px;
+    transition:opacity .2s;touch-action:manipulation}
+  .submit-btn:active{opacity:.75}
+  .submit-btn:disabled{opacity:.35;cursor:default}
+  .success{display:none;text-align:center;padding:8px 0}
+  .success .arabic{font-size:26px;color:#F0EDE6;margin-bottom:6px;direction:rtl}
+  .success .translit{font-size:13px;color:#C9A84C;margin-bottom:12px;letter-spacing:1px}
+  .success .msg{font-size:13px;color:#9E9A92;line-height:1.75;margin-bottom:24px}
+  .share-section{border-top:1px solid rgba(201,168,76,.12);
+    border-bottom:1px solid rgba(201,168,76,.12);padding:24px 0;margin-bottom:24px}
+  .share-label{font-size:10px;letter-spacing:3px;color:#C9A84C;
+    text-transform:uppercase;margin-bottom:6px}
+  .share-sublabel{font-size:12px;color:#9E9A92;margin-bottom:18px;line-height:1.6}
+  .share-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .share-btn{display:flex;align-items:center;gap:8px;border:none;border-radius:3px;
+    padding:14px 22px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    font-family:Georgia,serif;font-weight:700;cursor:pointer;touch-action:manipulation;
+    transition:opacity .2s;min-width:148px;justify-content:center}
+  .share-btn:active{opacity:.75}
+  .share-btn-wa{background:#25D366;color:#fff}
+  .share-btn-ig{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff}
+  .name-opt{font-size:11px;color:#9E9A92;margin-bottom:12px;line-height:1.6}
+  .name-toggle{background:transparent;border:1px solid rgba(201,168,76,.25);
+    border-radius:3px;color:#C9A84C;padding:8px 16px;font-size:10px;
+    letter-spacing:1.5px;text-transform:uppercase;font-family:Georgia,serif;
+    cursor:pointer;touch-action:manipulation;margin-bottom:12px}
+  .name-field{display:none;margin-bottom:12px}
+  .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);
+    background:#1E2028;border:1px solid rgba(201,168,76,.35);
+    color:#C9A84C;font-size:12px;letter-spacing:1px;padding:12px 24px;
+    border-radius:3px;z-index:999;transition:transform .3s ease,opacity .3s ease;
+    opacity:0;white-space:nowrap}
+  .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+  .another-btn{display:inline-block;background:transparent;
+    border:1px solid rgba(201,168,76,.3);border-radius:3px;color:#C9A84C;
+    padding:13px 24px;font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    font-family:Georgia,serif;cursor:pointer;touch-action:manipulation;
+    transition:border-color .2s,background .2s;margin-bottom:12px}
+  .another-btn:active{border-color:rgba(201,168,76,.7);background:rgba(201,168,76,.05)}
+  .return-btn{display:inline-block;background:transparent;color:#9E9A92;
+    font-size:11px;letter-spacing:1.5px;padding:10px 0;text-decoration:none;
+    text-transform:uppercase;border:none;cursor:pointer;font-family:Georgia,serif}
+  .char-count{font-size:10px;color:#4A4840;text-align:right;margin-top:5px}
+  .footer{text-align:center;margin-top:28px;padding-top:20px;
+    border-top:1px solid rgba(201,168,76,.08)}
+  .footer p{font-size:11px;color:#3A3830;letter-spacing:1px;margin-bottom:4px;line-height:1.6}
+  .footer small{font-size:10px;color:#2A2820}
+  #export-canvas{display:none}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+  <div class="inner">
+    <span class="eyebrow">10 Best Days &middot; 10 Lessons from the Qur&rsquo;an</span>
+    <div class="divider"></div>
+
+    <!-- FORM -->
+    <div id="form-section">
+      <h1>What did the Qur&rsquo;an<br/>teach you today?</h1>
+      <p class="subtitle">
+        Open The Clear Qur&rsquo;an. Read for 10 minutes.
+        Share one lesson that moved you &mdash; a verse, a thought, a realization.
+        We&rsquo;ll share reflections with the community throughout these blessed days.
+      </p>
+      <form id="reflection-form">
+        <div class="form-group">
+          <label for="name">Your Name <span style="color:#4A4840;font-size:9px;letter-spacing:0;">(optional)</span></label>
+          <input type="text" id="name" name="entry.592856770"
+            placeholder="e.g. Fatima A." autocomplete="name" autocorrect="off"/>
+        </div>
+        <div class="form-group">
+          <label for="day">Which Day?</label>
+          <select id="day" name="entry.1343411792" required onchange="updateAyah(this.value)">
+            <option value="" disabled selected>Select a day &rarr;</option>
+            <option value="1">Day 1 &mdash; Gratitude</option>
+            <option value="2">Day 2 &mdash; Repentance</option>
+            <option value="3">Day 3 &mdash; Sacrifice</option>
+            <option value="4">Day 4 &mdash; Remembrance</option>
+            <option value="5">Day 5 &mdash; Trust in Allah</option>
+            <option value="6">Day 6 &mdash; Patience</option>
+            <option value="7">Day 7 &mdash; Unity</option>
+            <option value="8">Day 8 &mdash; Sincerity</option>
+            <option value="9">Day 9 &mdash; Du&lsquo;a / Arafah</option>
+            <option value="10">Day 10 &mdash; Submission / Eid</option>
+          </select>
+        </div>
+        <div class="ayah-box" id="ayah-preview">
+          <p id="ayah-text"></p>
+          <span class="ayah-ref" id="ayah-ref"></span>
+          <span class="ayah-source">The Clear Qur&rsquo;an &mdash; Dr. Mustafa Khattab</span>
+        </div>
+        <div class="form-group">
+          <label for="reflection">Your Reflection</label>
+          <textarea id="reflection" name="entry.1633940" required maxlength="600"
+            placeholder="Share an ayah, a thought, or a lesson from The Clear Qur'an that spoke to you today..."
+            oninput="updateCount(this)"></textarea>
+          <div class="char-count"><span id="count">0</span> / 600</div>
+        </div>
+        <button type="submit" class="submit-btn" id="submit-btn">Share My Reflection</button>
+      </form>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success" id="success-msg">
+      <div class="arabic">\u062C\u0632\u0627\u0643 \u0627\u0644\u0644\u0647 \u062E\u064A\u0631\u064B\u0627</div>
+      <div class="translit">Jazakallahu Khayran</div>
+      <p class="msg">
+        Your reflection has been received.<br/>
+        May Allah accept your ibadah during these blessed days<br/>
+        and allow your words to benefit the community.
+      </p>
+
+      <div class="share-section">
+        <p class="share-label">Share with family &amp; friends</p>
+        <p class="share-sublabel">
+          Your branded card is ready &mdash; tap to share. Caption copies to clipboard automatically.
+        </p>
+
+        <!-- Optional name on card -->
+        <p class="name-opt">Want your name on the shared card?</p>
+        <button class="name-toggle" id="name-toggle" onclick="toggleNameField()">
+          + Add my name
+        </button>
+        <div class="name-field" id="name-field">
+          <input type="text" id="share-name" placeholder="Your name (shown on card)"
+            oninput="updateShareName(this.value)" autocorrect="off"/>
+        </div>
+
+        <div class="share-buttons">
+          <button class="share-btn share-btn-wa" onclick="shareCard('whatsapp')">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+              <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.531 5.85L.057 23.516a.5.5 0 0 0 .612.612l5.666-1.474A11.942 11.942 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.67-.523-5.183-1.43l-.372-.22-3.862 1.005 1.006-3.744-.242-.386A9.944 9.944 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+            </svg>
+            WhatsApp
+          </button>
+          <button class="share-btn share-btn-ig" onclick="shareCard('instagram')">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+            Instagram
+          </button>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+        <button class="another-btn" onclick="resetForm()">&#8617;&nbsp; Submit Another Reflection</button>
+        <a href="javascript:history.back()" class="return-btn">&larr; Return to main page</a>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>furqaanproject.ca &middot; Al-Furqaan Foundation Canada</p>
+      <small>The Clear Qur&rsquo;an &mdash; Dr. Mustafa Khattab</small>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<canvas id="export-canvas"></canvas>
+
+<script>
+const GOOGLE_FORM_ACTION="https://docs.google.com/forms/d/e/1FAIpQLScrCrdnuubUXxHL7W3CcpKk9qs22luTx7AeJR6q2fdNmV1Wzg/formResponse";
+const SITE_URL="furqaanproject.github.io/ApplyQuran/reflection";
+
+const themes={"1":"Gratitude","2":"Repentance","3":"Sacrifice","4":"Remembrance",
+  "5":"Trust in Allah","6":"Patience","7":"Unity","8":"Sincerity",
+  "9":"Du\u02bfa \u2014 Arafah","10":"Submission \u2014 Eid"};
+
+const ayahs={
+  "1":{text:"\u201cIf you are grateful, I will certainly give you more.\u201d",ref:"Surah Ibrahim 14:7"},
+  "2":{text:"\u201cDo not lose hope in Allah\u2019s mercy, for Allah certainly forgives all sins. He is indeed the All-Forgiving, Most Merciful.\u201d",ref:"Surah Az-Zumar 39:53"},
+  "3":{text:"\u201cNeither their meat nor blood reaches Allah. Rather, it is your piety that reaches Him.\u201d",ref:"Surah Al-Hajj 22:37"},
+  "4":{text:"\u201cRemember Me; I will remember you.\u201d",ref:"Surah Al-Baqarah 2:152"},
+  "5":{text:"\u201cAnd whoever puts their trust in Allah, then He \u02f9alone\u02fa is sufficient for them.\u201d",ref:"Surah At-Talaq 65:3"},
+  "6":{text:"\u201cOnly those who endure patiently will be given their reward without limit.\u201d",ref:"Surah Az-Zumar 39:10"},
+  "7":{text:"\u201cAnd hold firmly together to the rope of Allah and do not be divided.\u201d",ref:"Surah Aal-Imran 3:103"},
+  "8":{text:"\u201cThey were only commanded to worship Allah \u02f9alone\u02fa with sincere devotion to Him in all uprightness.\u201d",ref:"Surah Al-Bayyinah 98:5"},
+  "9":{text:"\u201cI respond to one\u2019s prayer when they call upon Me.\u201d",ref:"Surah Al-Baqarah 2:186"},
+  "10":{text:"\u201cThen when they submitted \u02f9to Allah\u2019s Will\u02fa, and Abraham laid him on his forehead \u02f9for sacrifice\u02fa.\u201d",ref:"Surah As-Saffat 37:103"}
+};
+
+const colors={"1":"#C9A84C","2":"#7EB8B0","3":"#C9A84C","4":"#7EB8B0","5":"#C9A84C",
+  "6":"#7EB8B0","7":"#C9A84C","8":"#7EB8B0","9":"#C9A84C","10":"#7EB8B0"};
+
+let lastSubmission={name:"",day:"",reflection:""};
+let shareNameValue="";
+
+// ── Init: read URL param ──
+window.addEventListener("DOMContentLoaded",()=>{
+  const params=new URLSearchParams(window.location.search);
+  const d=params.get("day");
+  if(d&&ayahs[d]){
+    const sel=document.getElementById("day");
+    sel.value=d;
+    updateAyah(d);
+  }
+});
+
+function updateAyah(val){
+  const p=document.getElementById("ayah-preview");
+  if(ayahs[val]){
+    document.getElementById("ayah-text").textContent=ayahs[val].text;
+    document.getElementById("ayah-ref").textContent=ayahs[val].ref;
+    p.style.display="block";
+  } else {p.style.display="none";}
+}
+
+function updateCount(el){document.getElementById("count").textContent=el.value.length;}
+
+function toggleNameField(){
+  const f=document.getElementById("name-field");
+  const b=document.getElementById("name-toggle");
+  const showing=f.style.display==="block";
+  f.style.display=showing?"none":"block";
+  b.textContent=showing?"+ Add my name":"\u2212 Remove name";
+  if(showing){shareNameValue="";document.getElementById("share-name").value="";}
+}
+
+function updateShareName(v){shareNameValue=v;}
+
+function resetForm(){
+  document.getElementById("reflection-form").reset();
+  document.getElementById("count").textContent="0";
+  document.getElementById("ayah-preview").style.display="none";
+  document.getElementById("submit-btn").disabled=false;
+  document.getElementById("submit-btn").textContent="Share My Reflection";
+  document.getElementById("form-section").style.display="block";
+  document.getElementById("success-msg").style.display="none";
+  document.getElementById("name-field").style.display="none";
+  document.getElementById("name-toggle").textContent="+ Add my name";
+  shareNameValue="";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+// ── Toast ──
+function showToast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg; t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),3000);
+}
+
+// ── Caption ──
+function buildCaption(name,day,reflection){
+  const theme=themes[day]||"";
+  const ayah=ayahs[day]?ayahs[day].text:"";
+  const nameStr=name?`\u2014 ${name}`:"";
+  return(
+    `\u2728 Day ${day} of the 10 Best Days: ${theme}\n\n`+
+    `${ayah}\n`+
+    `The Clear Qur\u2019an \u2014 Dr. Mustafa Khattab\n\n`+
+    `\u201c${reflection}\u201d ${nameStr}\n\n`+
+    `These are the greatest days of the year. Open The Clear Qur\u2019an and share what moves you.\n\n`+
+    `\ud83d\udcd6 Submit your reflection: ${SITE_URL}\n\n`+
+    `#10BestDays #DhulHijjah #TheClearQuran #Quran #AlFurqaanFoundation`
+  );
+}
+
+// ── Canvas card ──
+function wrapText(ctx,text,maxWidth){
+  const words=text.split(" ");const lines=[];let line="";
+  for(const w of words){
+    const t=line+w+" ";
+    if(ctx.measureText(t).width>maxWidth&&line){lines.push(line.trim());line=w+" ";}
+    else line=t;
+  }
+  if(line.trim())lines.push(line.trim());
+  return lines;
+}
+
+function generateCard(name,day,reflection){
+  const S=1080;
+  const canvas=document.getElementById("export-canvas");
+  canvas.width=S;canvas.height=S;
+  const ctx=canvas.getContext("2d");
+  const col=colors[day]||"#C9A84C";
+  const theme=themes[day]||"";
+  const ayah=ayahs[day]||{text:"",ref:""};
+
+  ctx.fillStyle="#0E1117";ctx.fillRect(0,0,S,S);
+
+  // Glow
+  const g=ctx.createRadialGradient(S/2,100,0,S/2,100,600);
+  g.addColorStop(0,"rgba(201,168,76,0.09)");g.addColorStop(1,"rgba(0,0,0,0)");
+  ctx.fillStyle=g;ctx.fillRect(0,0,S,S);
+
+  // Corners
+  const C=80;ctx.strokeStyle="rgba(201,168,76,0.55)";ctx.lineWidth=2.5;
+  [[[0,C],[0,0],[C,0]],[[S-C,0],[S,0],[S,C]],[[0,S-C],[0,S],[C,S]],[[S-C,S],[S,S],[S,S-C]]].forEach(pts=>{
+    ctx.beginPath();ctx.moveTo(...pts[0]);ctx.lineTo(...pts[1]);ctx.lineTo(...pts[2]);ctx.stroke();
+  });
+
+  ctx.textAlign="center";
+
+  // Org
+  ctx.fillStyle="rgba(201,168,76,0.65)";ctx.font="26px Georgia";
+  ctx.fillText("AL-FURQAAN FOUNDATION CANADA",S/2,118);
+
+  // Day + theme
+  ctx.fillStyle=col;ctx.font="bold 30px Georgia";
+  ctx.fillText(`DAY ${day}  \u00B7  ${theme.toUpperCase()}`,S/2,176);
+
+  // Divider
+  ctx.strokeStyle="rgba(201,168,76,0.2)";ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(160,200);ctx.lineTo(S-160,200);ctx.stroke();
+
+  // Arabic
+  ctx.fillStyle="#F0EDE6";ctx.font="34px Georgia";
+  const aLines=wrapText(ctx,ayah.text,S-200);
+  let y=258;
+  aLines.forEach(l=>{ctx.fillText(l,S/2,y);y+=50;});
+
+  // Ref + source
+  ctx.fillStyle="rgba(201,168,76,0.65)";ctx.font="22px Georgia";
+  ctx.fillText(ayah.ref,S/2,y+8);y+=36;
+  ctx.fillStyle="rgba(201,168,76,0.4)";ctx.font="italic 17px Georgia";
+  ctx.fillText("The Clear Qur\u2019an \u2014 Dr. Mustafa Khattab",S/2,y+4);y+=32;
+
+  // Mid divider
+  ctx.strokeStyle="rgba(201,168,76,0.15)";ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(200,y+10);ctx.lineTo(S-200,y+10);ctx.stroke();y+=34;
+
+  // My Reflection label
+  ctx.fillStyle="rgba(201,168,76,0.5)";ctx.font="600 18px Georgia";
+  ctx.fillText("M Y   R E F L E C T I O N",S/2,y+14);y+=44;
+
+  // Reflection
+  ctx.fillStyle="#F0EDE6";ctx.font="italic 31px Georgia";
+  const rLines=wrapText(ctx,`\u201c${reflection}\u201d`,S-160);
+  rLines.forEach(l=>{ctx.fillText(l,S/2,y);y+=48;});
+
+  // Name (optional)
+  if(name&&name.trim()){
+    ctx.fillStyle="rgba(201,168,76,0.65)";ctx.font="24px Georgia";
+    ctx.fillText(`\u2014 ${name.trim()}`,S/2,y+10);y+=44;
+  }
+
+  // Bottom
+  const btmY=Math.min(y+28,S-110);
+  ctx.strokeStyle="rgba(201,168,76,0.18)";ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(160,btmY);ctx.lineTo(S-160,btmY);ctx.stroke();
+  ctx.fillStyle="rgba(201,168,76,0.5)";ctx.font="24px Georgia";
+  ctx.fillText("furqaanproject.ca",S/2,btmY+46);
+  ctx.fillStyle="rgba(201,168,76,0.28)";ctx.font="20px Georgia";
+  ctx.fillText("#10BestDays  \u00B7  #DhulHijjah  \u00B7  #TheClearQuran",S/2,btmY+80);
+
+  return canvas;
+}
+
+// ── Share ──
+async function shareCard(platform){
+  const{name:formName,day,reflection}=lastSubmission;
+  if(!day||!reflection)return;
+
+  const shareName=shareNameValue||"";
+  const caption=buildCaption(shareName,day,reflection);
+  const canvas=generateCard(shareName,day,reflection);
+
+  try{await navigator.clipboard.writeText(caption);}catch(e){}
+
+  canvas.toBlob(async(blob)=>{
+    const file=new File([blob],`10bestdays-day${day}.png`,{type:"image/png"});
+
+    if(navigator.canShare&&navigator.canShare({files:[file]})){
+      try{
+        await navigator.share({
+          files:[file],
+          text:platform==="whatsapp"?caption:"",
+          title:`Day ${day}: ${themes[day]} \u2014 10 Best Days`,
+        });
+        return;
+      }catch(e){if(e.name==="AbortError")return;}
+    }
+
+    // Fallback
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url;a.download=`10bestdays-day${day}.png`;a.click();
+    URL.revokeObjectURL(url);
+
+    if(platform==="whatsapp"){
+      setTimeout(()=>window.open(`https://wa.me/?text=${encodeURIComponent(caption)}`,"_blank"),600);
+    }
+
+    showToast("\u2713 Caption copied \u2014 paste when sharing");
+  },"image/png");
+}
+
+// ── Form submit ──
+document.getElementById("reflection-form").addEventListener("submit",async function(e){
+  e.preventDefault();
+  const btn=document.getElementById("submit-btn");
+  btn.disabled=true;btn.textContent="Sending\u2026";
+
+  lastSubmission={
+    name:document.getElementById("name").value.trim(),
+    day:document.getElementById("day").value,
+    reflection:document.getElementById("reflection").value.trim(),
+  };
+
+  // Save submitted day to localStorage
+  try{
+    const sub=JSON.parse(localStorage.getItem("dh_sub")||"{}");
+    sub[lastSubmission.day]=true;
+    localStorage.setItem("dh_sub",JSON.stringify(sub));
+  }catch(e){}
+
+  try{
+    await fetch(GOOGLE_FORM_ACTION,{method:"POST",mode:"no-cors",body:new FormData(this)});
+    document.getElementById("form-section").style.display="none";
+    document.getElementById("success-msg").style.display="block";
+    window.scrollTo({top:0,behavior:"smooth"});
+  }catch(err){
+    btn.disabled=false;btn.textContent="Share My Reflection";
+    alert("Something went wrong. Please try again.");
+  }
+});
+</script>
+</body>
+</html>
