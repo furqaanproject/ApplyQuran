@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 
 // ── CONFIG ──────────────────────────────────────────────────
-const FORM_URL = "/ApplyQuran/reflection/";
+const FORM_URL = "/reflection/";
 // Day 1 = May 18 2026 midnight PDT (UTC-7 → 07:00 UTC)
 const DAY_ONE_UTC = Date.UTC(2026, 4, 18, 7, 0, 0);
 
